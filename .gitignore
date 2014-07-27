@@ -1,0 +1,9 @@
+*.idb
+*.obj
+*.user
+*.htm
+*.manifest
+*.pdb
+*.res
+*.dep
+*.aps
