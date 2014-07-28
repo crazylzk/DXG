@@ -7,3 +7,6 @@
 *.res
 *.dep
 *.aps
+*.ncb
+*.exe
+*.ilk

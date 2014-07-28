@@ -11,5 +11,6 @@
 
 #define Ret_If_Fail(x) { if(!(x)){DXG_LOG("E#at%s:%d line"#x"\n", __FUNCTION__, __LINE__);} }
 #define Ret_Val_If_Fail(val, x) { if(!(x)){ DXG_LOG("E#at%s:%d line"#x"\n", __FUNCTION__, __LINE__); return val; }}
+#define Break_If_Fail(val, x)  { if(!(x)){ DXG_LOG("E#at%s:%d line"#x"\n", __FUNCTION__, __LINE__); break; }} 
 #define Safe_Release(p) {if((p)){ (p)->Release(); (p) = NULL;}}
 #endif
