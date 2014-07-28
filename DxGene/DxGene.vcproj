@@ -181,6 +181,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DXGScene.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DXGSceneObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DxTutorail.cpp"
 				>
 			</File>
@@ -196,6 +204,14 @@
 			</File>
 			<File
 				RelativePath=".\DXGEnv.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DXGScene.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DXGSceneObject.h"
 				>
 			</File>
 			<File
