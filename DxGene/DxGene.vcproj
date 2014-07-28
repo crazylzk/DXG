@@ -177,6 +177,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DXGInput.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DXGMain.cpp"
 				>
 			</File>
@@ -207,11 +211,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DXGInput.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DXGScene.h"
 				>
 			</File>
 			<File
 				RelativePath=".\DXGSceneObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IDXGFrameListner.h"
 				>
 			</File>
 			<File

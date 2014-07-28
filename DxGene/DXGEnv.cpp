@@ -3,7 +3,7 @@
 CDXGEnv * CDXGEnv::s_Instance = NULL;
 CDXGEnv::CDXGEnv(void) : m_WinHeight(0), m_WinWidth(0),m_FullScreen(false),
 						m_WinHandle(NULL),m_Device(NULL),m_Context(NULL),m_DefaultRTV(NULL),m_DefaultDSV(NULL),
-						m_SwapChain(NULL),m_DepthStencilTX(NULL),m_VSync(false)
+						m_SwapChain(NULL),m_DepthStencilTX(NULL),m_VSync(false),m_Input(NULL)
 {
 	if (s_Instance)
 	{
@@ -72,6 +72,12 @@ bool CDXGEnv::initEnv(int vPosX, int vPosY, int vWinWidth, int vWinHeight, bool 
 
 	if (!initWindow(vPosX, vPosY, vWinWidth, vWinHeight))
 	{
+		return false;
+	}
+
+	if(!initInput())
+	{
+		DXG_LOG("input init failded\n");
 		return false;
 	}
 
@@ -252,6 +258,27 @@ bool CDXGEnv::initWindow(int vPosX, int vPosY, int vWinWidth, int vWinHeight)
 		}
 		
 		return false;
+}
+
+bool CDXGEnv::initInput()
+{
+	m_Input = new CDXGInput();
+	registerFrameListner(1, m_Input);
+	return true;
+}
+
+void CDXGEnv::deInitInput()
+{
+	unregsiterFrameListner(m_Input);
+	delete m_Input;
+	m_Input = NULL;
+
+}
+CDXGInput * CDXGEnv::getInput()
+{
+	Ret_Val_If_Fail(NULL, m_Input != NULL && "input should used after initEnv");
+	
+	return m_Input;
 }
 
 bool CDXGEnv::initDevice()
