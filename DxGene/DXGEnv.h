@@ -1,13 +1,13 @@
 #pragma once
 #include "DXGBase.h"
-#include <vector>
+#include <list>
 
 class IDXGFrameListner;
 class CDXGInput;
 class CDXGEnv
 {
 	
-	typedef std::vector<IDXGFrameListner *> m_Lisnter;
+	typedef std::list<IDXGFrameListner *> LISTNER_LIST;
 private:
 	int m_WinWidth;
 	int m_WinHeight;
@@ -22,6 +22,7 @@ private:
 	ID3D11DepthStencilView * m_DefaultDSV;
     
 	CDXGInput *m_Input;
+	LISTNER_LIST m_Listners;
   
 	static CDXGEnv * s_Instance;
 
@@ -31,7 +32,7 @@ private:
 	bool initWindow(int vPosX, int vPosY, int vWinWidth, int vWinHeight);
 	bool initDevice();
 	bool initInput();
-	bool deInitInput();
+	void deInitInput();
 	void deInitEnv();
 	void render();
 	void onResize(int vWidth, int vHeight);
@@ -39,7 +40,7 @@ private:
 public:
 	CDXGEnv(void);
 	bool initEnv(int vPosX, int vPosY, int vWinWidth, int vWinHeight, bool vVerticlSync = true, bool vFullScreen = false);
-	void registerFrameListner(int vUpdateOrder, IDXGFrameListner * vListner);
+	void registerFrameListner(IDXGFrameListner * vListner);
 	void unregsiterFrameListner(IDXGFrameListner * vListner);
 	void goMainLoop();
 	void swapBuffers();

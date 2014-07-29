@@ -4,8 +4,8 @@ class IDXGFrameListner
 {
 
   public:
-	  IDXGFrameListner(){};
-	  virtual ~IDXGFrameListner() = 0;
+	  virtual ~IDXGFrameListner(){};
+	  virtual int getUpdateOrder() = 0;
 
 	  virtual void frameBegin() = 0;
 	  virtual void frameUpdate() = 0;

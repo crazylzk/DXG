@@ -1,4 +1,6 @@
 #include "DXGEnv.h"
+#include "IDXGFrameListner.h"
+#include "DXGInput.h"
 
 CDXGEnv * CDXGEnv::s_Instance = NULL;
 CDXGEnv::CDXGEnv(void) : m_WinHeight(0), m_WinWidth(0),m_FullScreen(false),
@@ -148,6 +150,63 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			CDXGEnv::instance()->onResize(rc.right - rc.left, rc.bottom - rc.top);
 		}
 		break;
+	case WM_KEYDOWN:
+	/*case WM_SYSKEYDOWN:*/
+		{
+			CDXGEnv::instance()->getInput()->m_KeyMap[wParam &0xFF] = 1;
+		}break;
+	case WM_KEYUP:
+	/*case WM_SYSKEYUP: */
+		{
+			CDXGEnv::instance()->getInput()->m_KeyMap[wParam &0xFF] = 0;
+		}break;
+	case WM_MOUSEMOVE:
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_MOUSEWHEEL:
+		{
+			int xPos = ( short )LOWORD( lParam );
+			int yPos = ( short )HIWORD( lParam );
+
+			if( message == WM_MOUSEWHEEL )
+			{
+				// WM_MOUSEWHEEL passes screen mouse coords
+				// so convert them to client coords
+				POINT pt;
+				pt.x = xPos; pt.y = yPos;
+				ScreenToClient( hWnd, &pt );
+				xPos = pt.x; yPos = pt.y;
+			}
+
+			int nMouseWheelDelta = 0;
+			if( message == WM_MOUSEWHEEL )
+				nMouseWheelDelta = ( short )HIWORD( wParam );
+
+			int nMouseButtonState = LOWORD( wParam );
+			unsigned char bLeftButton = ( ( nMouseButtonState & MK_LBUTTON ) != 0 );
+			unsigned char bRightButton = ( ( nMouseButtonState & MK_RBUTTON ) != 0 );
+			unsigned char bMiddleButton = ( ( nMouseButtonState & MK_MBUTTON ) != 0 );
+			unsigned char bSideButton1 = ( ( nMouseButtonState & MK_XBUTTON1 ) != 0 );
+			unsigned char bSideButton2 = ( ( nMouseButtonState & MK_XBUTTON2 ) != 0 );
+
+			CDXGEnv::instance()->getInput()->m_ButtonMap[0] = bLeftButton;
+			CDXGEnv::instance()->getInput()->m_ButtonMap[1] = bMiddleButton;
+			CDXGEnv::instance()->getInput()->m_ButtonMap[2] = bRightButton;
+			CDXGEnv::instance()->getInput()->m_MouseX = xPos;
+			CDXGEnv::instance()->getInput()->m_MouseX = yPos;
+		}break;
+
+		
+
+
+
+
+
+
 
 
 	default:
@@ -263,7 +322,7 @@ bool CDXGEnv::initWindow(int vPosX, int vPosY, int vWinWidth, int vWinHeight)
 bool CDXGEnv::initInput()
 {
 	m_Input = new CDXGInput();
-	registerFrameListner(1, m_Input);
+	registerFrameListner( m_Input);
 	return true;
 }
 
@@ -380,15 +439,48 @@ bool CDXGEnv::initDevice()
 
 void CDXGEnv::render()
 {
-
+/*
 	float clearColor[] = {0.0f, 0.0f ,0.0f, 1.0f};
 	m_Context->ClearRenderTargetView(m_DefaultRTV, clearColor);
 	m_Context->ClearDepthStencilView(m_DefaultDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	
 	swapBuffers();
+	*/
+	LISTNER_LIST::iterator itr;
+
+	for(itr = m_Listners.begin(); itr != m_Listners.end(); itr++)
+	{
+		(*itr)->frameBegin();
+		(*itr)->frameUpdate();
+		(*itr)->frameEnd();
+	}
 }
 
 void CDXGEnv::swapBuffers()
 {
 	m_SwapChain->Present(m_VSync ? 1 : 0, 0);
+}
+
+void CDXGEnv::registerFrameListner(IDXGFrameListner * vListner)
+{
+	LISTNER_LIST::iterator itr;
+
+	Ret_If_Fail(vListner != NULL);
+	for(itr = m_Listners.begin(); itr != m_Listners.end(); itr++)
+	{
+		if((*itr)->getUpdateOrder() == vListner->getUpdateOrder())
+		{
+			DXG_LOG("Listner with this UpdateOrder  exits\n");
+			return;
+		}
+
+		if((*itr)->getUpdateOrder()> vListner->getUpdateOrder())
+			break;
+	}
+	m_Listners.insert(itr,vListner);
+}
+
+void CDXGEnv::unregsiterFrameListner(IDXGFrameListner * vListner)
+{
+	m_Listners.remove(vListner);
 }
