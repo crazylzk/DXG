@@ -14,18 +14,6 @@ void CDXGInput::frameBegin()
 
 void CDXGInput::frameUpdate()
 {
-   for(int i = 0; i <256; i++)
-   {
-	   if(isKeyDown((char)i))
-	   {
-       DXG_LOG("%c key down\n",(char) i);
-	   }
-   }
-   for(int i = 0; i <3; i++)
-   {
-	   if(isMouseDown(i))
-         DXG_LOG("%d mbutton down\n", i);
-   }
 }
 
 void CDXGInput::frameEnd()

@@ -92,6 +92,9 @@ bool CDXGEnv::initEnv(int vPosX, int vPosY, int vWinWidth, int vWinHeight, bool 
 
 void CDXGEnv::deInitEnv()
 {
+	deInitInput();
+	m_Listners.clear();
+
 	if(m_FullScreen)
 	{
 		m_SwapChain->SetFullscreenState(FALSE, NULL);

@@ -7,6 +7,8 @@ class CDXGScene
 public:
 	CDXGScene(void);
 	~CDXGScene(void);
+private:
+
 
 };
 

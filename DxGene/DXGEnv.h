@@ -41,7 +41,7 @@ public:
 	CDXGEnv(void);
 	bool initEnv(int vPosX, int vPosY, int vWinWidth, int vWinHeight, bool vVerticlSync = true, bool vFullScreen = false);
 	void registerFrameListner(IDXGFrameListner * vListner);
-	void unregsiterFrameListner(IDXGFrameListner * vListner);
+	//void unregsiterFrameListner(IDXGFrameListner * vListner);
 	void goMainLoop();
 	void swapBuffers();
 	HWND  getWindowHandle() { return m_WinHandle ;}

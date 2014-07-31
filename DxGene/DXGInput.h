@@ -28,9 +28,9 @@ public:
 	virtual void frameEnd();
 	virtual int getUpdateOrder(){ return 0;}
 public:
-	bool isKeyDown(char vKey){ return m_KeyMap[(unsigned char)vKey] == 1;}
+	bool isKeyDown(BYTE vKey){ return m_KeyMap[(unsigned char)vKey] == 1;}
 	
-	bool isKeyUp(char vKey){ return m_KeyMap[(unsigned char)vKey] == 0;};
+	bool isKeyUp(BYTE vKey){ return m_KeyMap[(unsigned char)vKey] == 0;};
 	bool isMouseDown(int vButton);
 	bool isMouseUp(int vButton);
 	void getMousePos(int &outX, int &outY);

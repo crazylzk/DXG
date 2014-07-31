@@ -2,6 +2,7 @@
 #define DXG_BASE_H
 
 #include <windows.h>
+#include <winuser.h>
 #include <d3d11.h>
 #include <d3dx11.h>
 #include <D3Dcompiler.h>
