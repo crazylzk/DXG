@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-class CDXRenderable;
+class CDXGRenderable;
 class CDXGSceneObject
 {
 	typedef std::vector<CDXGSceneObject *> SOBJ_VEC;
@@ -15,7 +15,7 @@ private:
 	 bool m_WorldMatDirty;
 	 CDXGSceneObject *m_Parent;
 	 SOBJ_VEC m_Children;
-	 CDXRenderable * m_Renderable; //ÄÚÈÝ
+	 CDXGRenderable * m_Renderable; //ÄÚÈÝ
 	 std::string m_Name;
 
 private:
@@ -28,7 +28,8 @@ public:
 	void setName(const char *vName);
 	void attachToParent(CDXGSceneObject * vParent);
 	void detachFromParent(CDXGSceneObject *vParent);
-	void setRenderable(CDXRenderable * vRenderable);
+	void setRenderable(CDXGRenderable * vRenderable);
+	CDXGRenderable * getRenderable();
 	void getWorldMat(XMMATRIX * out_World);
 	void getLocalMat(XMMATRIX * out_Local);
 	void setWorldMat(const XMMATRIX & vWorld );

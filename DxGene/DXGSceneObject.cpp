@@ -58,11 +58,15 @@ void CDXGSceneObject::detachFromParent(CDXGSceneObject *vParent)
 
 }
 
-void CDXGSceneObject::setRenderable(CDXRenderable * vRenderable)
+void CDXGSceneObject::setRenderable(CDXGRenderable * vRenderable)
 {
-	Ret_If_Fail(vRenderable != NULL);
-
+	
 	m_Renderable = vRenderable;
+}
+
+CDXGRenderable * CDXGSceneObject::getRenderable()
+{
+	return m_Renderable;
 }
 
 void CDXGSceneObject::update()
