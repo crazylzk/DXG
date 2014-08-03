@@ -331,7 +331,6 @@ bool CDXGEnv::initInput()
 
 void CDXGEnv::deInitInput()
 {
-	unregsiterFrameListner(m_Input);
 	delete m_Input;
 	m_Input = NULL;
 
@@ -481,9 +480,4 @@ void CDXGEnv::registerFrameListner(IDXGFrameListner * vListner)
 			break;
 	}
 	m_Listners.insert(itr,vListner);
-}
-
-void CDXGEnv::unregsiterFrameListner(IDXGFrameListner * vListner)
-{
-	m_Listners.remove(vListner);
 }
