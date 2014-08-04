@@ -18,13 +18,14 @@ public:
 	typedef std::map<const char *, CREATOR_FUNC> CREATOR_MAP;
 private:
 	SOBJ_VEC m_Objs;
+	CDXGSceneObject * m_Root;
 public:
 	
 public:
 	CDXGScene(void);
 	~CDXGScene(void);
 	void update();
-	void onVisit(IDXGSceneVisitor * vVistor);
+	void onCullVisit(IDXGSceneVisitor * vVisitor);
 	
 	CDXGSceneObject * getSceneObject( const char * vName);
 	CDXGSceneObject * getSceneRoot();

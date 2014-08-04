@@ -29,6 +29,8 @@ public:
 	void attachToParent(CDXGSceneObject * vParent);
 	void detachFromParent(CDXGSceneObject *vParent);
 	void setRenderable(CDXGRenderable * vRenderable);
+	unsigned int getChildrenSize();
+	CDXGSceneObject * getChild( unsigned int vIndex);
 	CDXGRenderable * getRenderable();
 	void getWorldMat(XMMATRIX * out_World);
 	void getLocalMat(XMMATRIX * out_Local);

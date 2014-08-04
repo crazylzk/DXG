@@ -15,9 +15,9 @@ CDXGSceneObject::~CDXGSceneObject()
 }
 const char * CDXGSceneObject::getName()
 {
-
 	return m_Name.c_str();
 }
+
 void CDXGSceneObject::setName(const char *vName)
 {
 	Ret_If_Fail(vName != NULL);
@@ -72,9 +72,10 @@ CDXGRenderable * CDXGSceneObject::getRenderable()
 void CDXGSceneObject::update()
 {
     XMMATRIX parent;
+
 	Ret_If_Fail((m_WorldMatDirty == false || m_LocalMatDirty == false) && " don't know how to caculate the mat" );
-	
 	parent = XMMatrixIdentity();
+
 	if(m_Parent)
 	{
 		m_Parent->getWorldMat(&parent);
@@ -124,6 +125,7 @@ void CDXGSceneObject::getWorldMat(XMMATRIX * out_World)
 	}
 	*out_World = m_WorldMat;
 }
+
 void CDXGSceneObject::getLocalMat(XMMATRIX * out_Local)
 {
 	XMMATRIX parent;
@@ -145,8 +147,8 @@ void CDXGSceneObject::getLocalMat(XMMATRIX * out_Local)
 	}
 	
 	*out_Local = m_LocalMat;
-
 }
+
 void CDXGSceneObject::setWorldMat(const XMMATRIX & vWorld )
 {
 	m_WorldMat = vWorld;
@@ -154,10 +156,23 @@ void CDXGSceneObject::setWorldMat(const XMMATRIX & vWorld )
 	m_LocalMatDirty = true;
 	markDesdentWorldDirty();
 }
+
 void CDXGSceneObject::setLocalMat(const XMMATRIX & vLocal )
 {
 	m_LocalMat = vLocal;
 	m_LocalMatDirty = false;
 	m_WorldMatDirty = true;
 	markDesdentWorldDirty();
+}
+
+unsigned int CDXGSceneObject::getChildrenSize()
+{
+	return m_Children.size();
+}
+
+CDXGSceneObject * CDXGSceneObject::getChild( unsigned int vIndex)
+{
+	Ret_Val_If_Fail(NULL, vIndex < m_Children.size());
+
+	return m_Children[vIndex];
 }
